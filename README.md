@@ -23,20 +23,12 @@ npm run typecheck
 npm run lint
 ```
 
-## Vor dem ersten Deployment ausfüllen
+## Rechtliche Angaben
 
-`content/legal.ts` enthält alle rechtlichen Angaben an einer Stelle. Die mit
-`TODO` markierten Felder müssen aus stefanai.de/impressum bzw.
-/datenschutzerklaerung übernommen werden:
-
-- Straße, PLZ, Ort
-- Telefonnummer
-- Registereintrag
-- USt-IdNr.
-- zuständige Datenschutz-Aufsichtsbehörde
-
-Nicht ausgefüllte Felder werden auf `/impressum` und `/datenschutz` gelb
-hervorgehoben, damit sie nicht unbemerkt online gehen.
+`content/legal.ts` bündelt Impressum- und Datenschutzangaben an einer Stelle;
+`app/impressum` und `app/datenschutz` lesen ausschließlich von dort. Der
+Abschnitt zur EU-Plattform für Online-Streitbeilegung lässt sich über
+`showOdrSection` ausblenden.
 
 ## Aufbau
 

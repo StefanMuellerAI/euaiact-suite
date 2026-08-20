@@ -87,6 +87,9 @@ body {
   margin-bottom: 0.5rem;
 }
 .legal p + p,
+.legal ul + p,
+.legal ol + p,
+.legal address + p,
 .legal ul,
 .legal ol,
 .legal address {

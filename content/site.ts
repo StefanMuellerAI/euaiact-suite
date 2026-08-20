@@ -4,6 +4,7 @@ export const site = {
   description:
     "Kleine, fokussierte Web-Werkzeuge rund um den EU AI Act. Alle Bildverarbeitung läuft direkt im Browser – es werden keine Dateien hochgeladen.",
   operator: "StefanAI – Research & Development",
+  legalEntity: "StefanAI Solutions GmbH",
   contactEmail: "info@stefanai.de",
   locale: "de-DE",
 } as const;

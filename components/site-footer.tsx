@@ -6,7 +6,7 @@ export function SiteFooter() {
     <footer className="mt-16 border-t border-ink-200 bg-white">
       <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 text-sm text-ink-500 sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <p>
-          © {new Date().getFullYear()} {site.operator} · Interne Nutzung
+          © {new Date().getFullYear()} {site.legalEntity} · Interne Nutzung
         </p>
         <nav aria-label="Rechtliches">
           <ul className="flex flex-wrap gap-5">

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { LegalValue } from "@/components/legal-value";
-import { imprint } from "@/content/legal";
+import { imprint, showOdrSection } from "@/content/legal";
 
 export const metadata: Metadata = {
   title: "Impressum",
@@ -8,6 +7,8 @@ export const metadata: Metadata = {
 };
 
 export default function ImpressumPage() {
+  const { contentResponsible, register } = imprint;
+
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
       <h1 className="text-3xl font-bold tracking-tight text-ink-900">Impressum</h1>
@@ -17,51 +18,64 @@ export default function ImpressumPage() {
         <address>
           {imprint.company}
           <br />
-          <LegalValue value={imprint.street} />
+          {imprint.representative}
           <br />
-          <LegalValue value={imprint.postalCode} />{" "}
-          <LegalValue value={imprint.city} />
+          {imprint.street}
+          <br />
+          {imprint.postalCode} {imprint.city}
           <br />
           {imprint.country}
         </address>
 
-        <h2>Vertreten durch</h2>
-        <p>{imprint.representative}</p>
-
         <h2>Kontakt</h2>
         <p>
-          Telefon: <LegalValue value={imprint.phone} />
+          Telefon: <a href={`tel:${imprint.phoneHref}`}>{imprint.phone}</a>
           <br />
-          E-Mail:{" "}
-          <a href={`mailto:${imprint.email}`}>{imprint.email}</a>
+          E-Mail: <a href={`mailto:${imprint.email}`}>{imprint.email}</a>
         </p>
 
-        <h2>Registereintrag</h2>
+        <h2>Umsatzsteuer-ID und Amtsgericht</h2>
         <p>
-          <LegalValue value={imprint.register} />
+          Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:
+          <br />
+          {imprint.vatId}
         </p>
-
-        <h2>Umsatzsteuer-Identifikationsnummer</h2>
         <p>
-          Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:{" "}
-          <LegalValue value={imprint.vatId} />
+          {register.court}: {register.number}
         </p>
 
-        <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+        <h2>Redaktionell verantwortlich</h2>
+        <p>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV:</p>
         <address>
-          {imprint.contentResponsible}
+          {contentResponsible.name}
           <br />
-          <LegalValue value={imprint.street} />
+          {contentResponsible.street}
           <br />
-          <LegalValue value={imprint.postalCode} />{" "}
-          <LegalValue value={imprint.city} />
+          {contentResponsible.postalCode} {contentResponsible.city}
         </address>
 
-        <h2>Verbraucherstreitbeilegung</h2>
+        {showOdrSection ? (
+          <>
+            <h2>EU-Streitschlichtung</h2>
+            <p>
+              Die Europäische Kommission stellt eine Plattform zur
+              Online-Streitbeilegung (OS) bereit:{" "}
+              <a
+                href="https://ec.europa.eu/consumers/odr/"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                https://ec.europa.eu/consumers/odr/
+              </a>
+              . Unsere E-Mail-Adresse finden Sie oben im Impressum.
+            </p>
+          </>
+        ) : null}
+
+        <h2>Verbraucherstreitbeilegung/Universalschlichtungsstelle</h2>
         <p>
-          Wir sind nicht bereit und nicht verpflichtet, an
-          Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle
-          teilzunehmen (§ 36 VSBG).
+          Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren
+          vor einer Verbraucherschlichtungsstelle teilzunehmen.
         </p>
 
         <h2>Haftung für Inhalte</h2>
@@ -108,7 +122,8 @@ export default function ImpressumPage() {
         <p>
           Die auf dieser Website verwendeten Icons zur Kennzeichnung
           KI-generierter Inhalte stammen von der Europäischen Kommission und
-          werden von dieser zur freien Verwendung ohne Namensnennung bereit­gestellt.{" "}
+          werden von dieser zur freien Verwendung ohne Namensnennung
+          bereitgestellt.{" "}
           <a
             href="https://digital-strategy.ec.europa.eu/en/policies/eu-icons-labelling-ai-generated-content"
             target="_blank"

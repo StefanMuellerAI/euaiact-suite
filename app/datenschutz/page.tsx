@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { LegalValue } from "@/components/legal-value";
 import { dataProtection, imprint } from "@/content/legal";
 
 export const metadata: Metadata = {
@@ -9,7 +8,7 @@ export const metadata: Metadata = {
 };
 
 export default function DatenschutzPage() {
-  const { hosting } = dataProtection;
+  const { hosting, supervisoryAuthority } = dataProtection;
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
@@ -31,21 +30,17 @@ export default function DatenschutzPage() {
           <br />
           {imprint.representative}
           <br />
-          <LegalValue value={imprint.street} />
+          {imprint.street}
           <br />
-          <LegalValue value={imprint.postalCode} />{" "}
-          <LegalValue value={imprint.city} />
+          {imprint.postalCode} {imprint.city}
+          <br />
+          Telefon: <a href={`tel:${imprint.phoneHref}`}>{imprint.phone}</a>
           <br />
           E-Mail: <a href={`mailto:${imprint.email}`}>{imprint.email}</a>
         </address>
         {dataProtection.dpo ? (
           <p>Datenschutzbeauftragter: {dataProtection.dpo}</p>
-        ) : (
-          <p>
-            Ein Datenschutzbeauftragter ist nicht bestellt, da die gesetzlichen
-            Voraussetzungen hierfür nicht vorliegen.
-          </p>
-        )}
+        ) : null}
 
         <h2>2. Verarbeitung Ihrer Bilder – ausschließlich lokal</h2>
         <p>
@@ -162,9 +157,19 @@ export default function DatenschutzPage() {
           ein Beschwerderecht bei einer Datenschutz-Aufsichtsbehörde zu,
           insbesondere in dem Mitgliedstaat Ihres Aufenthaltsorts, Ihres
           Arbeitsplatzes oder des Orts des mutmaßlichen Verstoßes. Die für uns
-          zuständige Aufsichtsbehörde ist:{" "}
-          <LegalValue value={dataProtection.supervisoryAuthority} />
+          zuständige Aufsichtsbehörde ist:
         </p>
+        <address>
+          {supervisoryAuthority.name}
+          <br />
+          {supervisoryAuthority.street}
+          <br />
+          {supervisoryAuthority.postalCode} {supervisoryAuthority.city}
+          <br />
+          <a href={supervisoryAuthority.url} target="_blank" rel="noreferrer noopener">
+            {supervisoryAuthority.url}
+          </a>
+        </address>
 
         <h2>9. Verschlüsselung</h2>
         <p>
