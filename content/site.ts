@@ -38,11 +38,21 @@ export const tools: Tool[] = [
     icon: "label",
   },
   {
+    slug: "risikoklassifizierung",
+    href: "/tools/risikoklassifizierung",
+    title: "Risikoklassifizierung",
+    summary:
+      "Fragebogen mit festen Antwortmöglichkeiten: klärt die eigene Rolle, ordnet das KI-System einer Risikoklasse zu und listet die daraus folgenden Pflichten auf.",
+    legalBasis: "Art. 5, Art. 6, Art. 25, Art. 50, Anhang III AI Act",
+    status: "live",
+    icon: "shield",
+  },
+  {
     slug: "rollen-check",
     href: "#",
-    title: "Rollen-Check",
+    title: "Rollen-Check Lieferkette",
     summary:
-      "Klärt, ob eine Organisation im konkreten Fall Anbieter, Betreiber, Importeur oder Händler ist.",
+      "Vertiefung für mehrstufige Lieferketten: wer wann zum Anbieter wird, welche Angaben zwischen den Beteiligten fließen müssen und wie das vertraglich abgesichert wird. Die Grundfrage beantwortet bereits die Risikoklassifizierung.",
     legalBasis: "Art. 2, Art. 3, Art. 25 AI Act",
     status: "geplant",
     icon: "checklist",
@@ -56,16 +66,6 @@ export const tools: Tool[] = [
     legalBasis: "Art. 50 AI Act",
     status: "geplant",
     icon: "book",
-  },
-  {
-    slug: "risikoklassen",
-    href: "#",
-    title: "Risikoklassifizierung",
-    summary:
-      "Ordnet ein KI-System einer Risikoklasse zu und listet die daraus folgenden Pflichten auf.",
-    legalBasis: "Art. 5, Art. 6, Anhang III AI Act",
-    status: "geplant",
-    icon: "shield",
   },
 ];
 

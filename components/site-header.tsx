@@ -1,10 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { site } from "@/content/site";
+import { liveTools, site } from "@/content/site";
 
+/** Die Navigation folgt der Registry: neue Live-Werkzeuge erscheinen von selbst. */
 const navigation = [
   { href: "/", label: "Werkzeuge" },
-  { href: "/tools/ki-kennzeichnung", label: "Bild-Kennzeichnung" },
+  ...liveTools().map((tool) => ({ href: tool.href, label: tool.title })),
 ];
 
 export function SiteHeader() {
