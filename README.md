@@ -1,11 +1,15 @@
 # EU AI Act Suite
 
-Interne Sammlung kleiner Web-Werkzeuge rund um den EU AI Act. Erstes Werkzeug:
-**Bild-Kennzeichnung** – legt die offiziellen EU-Icons für KI-generierte Inhalte
-auf ein Bild.
+Interne Sammlung kleiner Web-Werkzeuge rund um den EU AI Act:
 
-Die Bildverarbeitung läuft vollständig im Browser (Canvas-API). Es gibt keinen
-Upload-Endpunkt, keine Datenbank und keine KI-Anbindung.
+- **Bild-Kennzeichnung** – legt die offiziellen EU-Icons für KI-generierte
+  Inhalte auf ein Bild.
+- **Risikoklassifizierung** – Fragebogen, der Rolle und Risikoklasse eines
+  KI-Systems bestimmt und den passenden Pflichtenkatalog ausgibt.
+
+Alles läuft vollständig im Browser: Bildverarbeitung über die Canvas-API, die
+Einstufung über einen festen Entscheidungsbaum. Es gibt keinen Upload-Endpunkt,
+keine Datenbank und keine KI-Anbindung.
 
 ## Stack
 
@@ -36,9 +40,11 @@ Abschnitt zur EU-Plattform für Online-Streitbeilegung lässt sich über
 app/
   page.tsx                      Übersicht aller Werkzeuge
   tools/ki-kennzeichnung/       Werkzeug: Bild-Kennzeichnung
+  tools/risikoklassifizierung/  Werkzeug: Risikoklassifizierung
   impressum/, datenschutz/      Rechtstexte
 components/
   labeler/                      Dropzone, Bedienfeld, Vorschau
+  risk-check/                   Fragebogen und Ergebnisdarstellung
   ui/controls.tsx               Formular-Bausteine
 content/
   site.ts                       Werkzeug-Registry und Metadaten
@@ -48,6 +54,7 @@ lib/
   labeling.ts                   Regeln und Geometrie (frei von DOM)
   image-io.ts                   Datei einlesen, EXIF-Orientierung
   render.ts                     Canvas-Komposition und Export
+  risk-classification.ts        Fragenkatalog und Entscheidungsbaum (frei von DOM)
 public/eu-icons/                Original-SVGs der Europäischen Kommission
 ```
 
@@ -56,8 +63,29 @@ public/eu-icons/                Original-SVGs der Europäischen Kommission
 1. Eintrag in `content/site.ts` (`tools`) anlegen.
 2. Route unter `app/tools/<slug>/page.tsx` erstellen.
 
-Die Startseite liest die Registry und zeigt neue Einträge automatisch an.
-Werkzeuge mit `status: "geplant"` erscheinen als nicht klickbare Vorschau.
+Die Startseite liest die Registry und zeigt neue Einträge automatisch an; die
+Kopfnavigation übernimmt alle Einträge mit `status: "live"`. Werkzeuge mit
+`status: "geplant"` erscheinen als nicht klickbare Vorschau.
+
+## Zur Risikoklassifizierung
+
+`lib/risk-classification.ts` enthält den vollständigen Fragenkatalog und die
+Auswertung. Beides ist bewusst regelbasiert statt KI-gestützt: Der Fragebogen
+ist ein Entscheidungsbaum, derselbe Antwortsatz ergibt immer dieselbe
+Einstufung, und das Modul ist frei von DOM- und Netzwerkzugriffen.
+
+- `STEPS` – bis zu elf Fragen; `when` blendet Fragen aus, die nach den
+  bisherigen Antworten entfallen (etwa Art. 6 Abs. 3 ohne Anhang-III-Bereich).
+- `classify(answers)` – prüft in dieser Reihenfolge: KI-System (Art. 3 Nr. 1),
+  Ausnahmen vom Anwendungsbereich (Art. 2), Verbote (Art. 5), Anhang I mit
+  Drittbewertung (Art. 6 Abs. 1), Anhang III mit Ausnahmefilter (Art. 6 Abs. 2
+  und 3) und schließlich Art. 50. Rolle (Art. 3, Art. 25) und
+  GPAI-Pflichten (Kapitel V) laufen als eigene Achse mit.
+- `resultAsText(...)` – Ergebnis samt Begründung und Antwortsatz als Klartext
+  für die eigene Akte.
+
+Fristen und Pflichtenkataloge stehen im Modul beziehungsweise auf der
+Werkzeugseite; bei Änderungen an der Verordnung sind beide Stellen anzupassen.
 
 ## Zu den EU-Icons
 
